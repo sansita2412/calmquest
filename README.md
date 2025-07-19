@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +69,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=======
+# 🌼 Hey, I'm Sansita Sharma
+
+I'm an Electronics & Communication Engineer turned Web Dev & Data Enthusiast 🌿  
+Lover of clean UI, calming user experiences & meaningful tech 🤍
+
+- 🔭 Currently building: **CalmQuest** – a productivity & wellness web app  
+- 🌱 Exploring: Data Analytics | NLP | React Ecosystem  
+- 🎯 Interests: Dopamine design, soft UX, accessibility
+
+📫 Connect with me:
+[LinkedIn](https://www.linkedin.com/in/sansita-sharma/)  | [Resume](https://drive.google.com/file/d/1TC82Tah5xjXvnO35O2Z7AGMhar--fYrH/view?usp=sharing)  
+>>>>>>> 883ea5fa884f0620eaf6a658a4d96f70909307bf
