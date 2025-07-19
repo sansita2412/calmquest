@@ -19,14 +19,16 @@ const audioTracks = [
   { name: 'Ghibli', file: '/assets/ghibli.mp3' },
 ];
 
-
-
 function App() {
-  const audioRef = useRef(null);
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
   const [isMuted, setIsMuted] = useState(false);
   const [showChecklist, setShowChecklist] = useState(false);
   const [bgIndex, setBgIndex] = useState(0);
   const [audioIndex, setAudioIndex] = useState(0);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -35,6 +37,20 @@ function App() {
       audio.play().catch(() => { });
     }
   }, [audioIndex]);
+
+  const addTask = () => {
+    if (newTask.trim() === '') return;
+    const updatedTasks = [...tasks, { id: Date.now(), text: newTask, completed: false }];
+    setTasks(updatedTasks);
+    setNewTask('');
+  };
+
+  const toggleTask = (id) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  };
 
   const toggleMute = () => {
     const audio = audioRef.current;
@@ -62,23 +78,20 @@ function App() {
     setAudioIndex((prev) => (prev === 0 ? audioTracks.length - 1 : prev - 1));
   };
 
-  const [darkMode, setDarkMode] = useState(false);
-
   const toggleDarkMode = () => {
-    setDarkMode(prev => !prev);
+    setDarkMode((prev) => !prev);
   };
+
   const handleFullscreen = () => {
     const elem = document.documentElement;
     if (!document.fullscreenElement) {
-      elem.requestFullscreen().catch(err => {
-        console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
-      });
+      elem.requestFullscreen().catch((err) =>
+        console.error(`Error attempting to enable fullscreen mode: ${err.message}`)
+      );
     } else {
       document.exitFullscreen();
     }
   };
-
-
 
   return (
     <div
@@ -91,33 +104,21 @@ function App() {
         transition: 'background-image 0.8s ease-in-out',
       }}
     >
-      {/* 🌙 Dark Mode in Top-Left */}
-      {/* 🌙 Dark Mode in Top-Left */}
+      {/* 🌙 Dark Mode Toggle */}
       <div className="top-left-controls">
         <button className="dark-mode-toggle" onClick={toggleDarkMode}>
           {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
         </button>
       </div>
 
-      {/* ⛶ Fullscreen in Top-Right */}
+      {/* ⛶ Fullscreen Toggle */}
       <div className="top-right-controls">
         <button className="fullscreen-toggle" onClick={handleFullscreen}>
           ⛶
         </button>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
-      {/* 🎧 Background Music */}
+      {/* 🎧 Background Audio */}
       <audio
         ref={audioRef}
         autoPlay
@@ -130,13 +131,10 @@ function App() {
       </audio>
       {darkMode && <div className="dark-overlay"></div>}
 
-
       {/* 🍅 Pomodoro Section */}
       <div className="timer-box">
         <h1 className="title">Pomodoro Timer 🍅</h1>
         <PomodoroTimer />
-
-        {/* 🔊 Audio Controls */}
         <div className="audio-controls">
           <button className="control-button" onClick={prevAudio}>⮜♪</button>
           <button className="control-button" onClick={toggleMute}>
@@ -154,10 +152,16 @@ function App() {
         📌 Checklist
       </div>
       <div className={`checklist-drawer ${showChecklist ? 'visible' : ''}`}>
-        <Checklist />
+        <Checklist
+          tasks={tasks}
+          newTask={newTask}
+          setNewTask={setNewTask}
+          toggleTask={toggleTask}
+          addTask={addTask}
+        />
       </div>
 
-      {/* 🎠 Background Switch Controls */}
+      {/* 🎠 Background Switch */}
       <div className="bg-controls">
         <button className="control-button" onClick={prevBackground}>⮜</button>
         <button className="control-button" onClick={nextBackground}>⮞</button>
