@@ -16,7 +16,7 @@ CalmQuest is a soft, minimalistic, and soothing productivity app designed to hel
 🛠️ Tech Stack
 Frontend: React (Expo-compatible structure)
 
-Styling: CSS / Styled Components (based on your setup)
+Styling: CSS / Styled Components (based on your setup),JSX,Javascript
 
 Assets: Soothing backgrounds, icons, and audio files
 
