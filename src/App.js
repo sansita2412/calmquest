@@ -147,26 +147,16 @@ function App() {
         </div>
       </div>
 
-      {/* 📌 Checklist Drawer */}
-      <div className="checklist-tab" onClick={() => setShowChecklist(!showChecklist)}>
-        📌 Checklist
-      </div>
-      <div className={`checklist-drawer ${showChecklist ? 'visible' : ''}`}>
-        <Checklist
-          tasks={tasks}
-          newTask={newTask}
-          setNewTask={setNewTask}
-          toggleTask={toggleTask}
-          addTask={addTask}
-        />
-      </div>
+
 
       {/* 🎠 Background Switch */}
       <div className="bg-controls">
         <button className="control-button" onClick={prevBackground}>⮜</button>
         <button className="control-button" onClick={nextBackground}>⮞</button>
       </div>
+      <Checklist />
     </div>
+
   );
 }
 
