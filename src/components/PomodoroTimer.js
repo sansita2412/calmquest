@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 function PomodoroTimer() {
     const [pomodoroLength, setPomodoroLength] = useState(25);
@@ -10,8 +10,8 @@ function PomodoroTimer() {
     const [cycleCount, setCycleCount] = useState(0);
     const [mode, setMode] = useState('pomodoro'); // 'pomodoro', 'short', 'long'
 
-    // Update timer when mode or lengths change
-    const handleSessionEnd = () => {
+    // Handle session end logic (wrapped in useCallback to fix ESLint)
+    const handleSessionEnd = useCallback(() => {
         setIsRunning(false);
         if (mode === 'pomodoro') {
             const nextCycle = cycleCount + 1;
@@ -21,7 +21,9 @@ function PomodoroTimer() {
             if (cycleCount >= 4) setCycleCount(0);
             setMode('pomodoro');
         }
-    };
+    }, [cycleCount, mode]);
+
+    // Update timer when mode or lengths change
     useEffect(() => {
         if (mode === 'pomodoro') setTimeLeft(pomodoroLength * 60);
         if (mode === 'short') setTimeLeft(shortBreakLength * 60);
@@ -43,10 +45,7 @@ function PomodoroTimer() {
             }, 1000);
         }
         return () => clearInterval(timer);
-    }, [isRunning]);
-
-    // Handle session end logic
-
+    }, [isRunning, handleSessionEnd]);
 
     // Button actions
     const handleStartPause = () => setIsRunning(!isRunning);
