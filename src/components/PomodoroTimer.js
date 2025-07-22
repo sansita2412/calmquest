@@ -11,6 +11,17 @@ function PomodoroTimer() {
     const [mode, setMode] = useState('pomodoro'); // 'pomodoro', 'short', 'long'
 
     // Update timer when mode or lengths change
+    const handleSessionEnd = () => {
+        setIsRunning(false);
+        if (mode === 'pomodoro') {
+            const nextCycle = cycleCount + 1;
+            setCycleCount(nextCycle);
+            setMode(nextCycle === 4 ? 'long' : 'short');
+        } else {
+            if (cycleCount >= 4) setCycleCount(0);
+            setMode('pomodoro');
+        }
+    };
     useEffect(() => {
         if (mode === 'pomodoro') setTimeLeft(pomodoroLength * 60);
         if (mode === 'short') setTimeLeft(shortBreakLength * 60);
@@ -35,18 +46,7 @@ function PomodoroTimer() {
     }, [isRunning]);
 
     // Handle session end logic
-    const handleSessionEnd = () => {
-        setIsRunning(false);
-        if (mode === 'pomodoro') {
-            const nextCycle = cycleCount + 1;
-            setCycleCount(nextCycle);
-            setMode(nextCycle === 4 ? 'long' : 'short');
-        } else {
-            // If break ends, go back to Pomodoro
-            if (cycleCount >= 4) setCycleCount(0); // reset after 4 Pomodoros
-            setMode('pomodoro');
-        }
-    };
+
 
     // Button actions
     const handleStartPause = () => setIsRunning(!isRunning);
